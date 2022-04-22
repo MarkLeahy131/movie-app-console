@@ -16,25 +16,25 @@ fun runMenu() {
             3  -> selectDuration()
             4  -> giveRating()
             0  -> exitApp()
-            else -> System.out.println("Invalid option entered: " + option)
+            else -> System.out.println("Invalid option entered: ${option}")
         }
     } while (true)
 }
 
 fun mainMenu() : Int {
-    print("""
-          ----------------------------------
-          |        NOTE KEEPER APP         |
-          ----------------------------------
-          | NOTE MENU                      |
-          |   1) Select a Genre            |
-          |   2) Select a Director         |
-          |   3) Select a Duration         |
-          |   4) Give a Rating             |
-          ----------------------------------
-          |   0) Exit                      |
-          ----------------------------------
-          ==>> """)
+    print(""" 
+         > ----------------------------------
+         > |        NOTE KEEPER APP         |
+         > ----------------------------------
+         > | NOTE MENU                      |
+         > |   1) Select a Genre            |
+         > |   2) Select a Director         |
+         > |   3) Select a Duration         |
+         > |   4) Give a Rating             |
+         > ----------------------------------
+         > |   0) Exit                      |
+         > ----------------------------------
+         > ==>> """.trimMargin(">"))
     return scanner.nextInt()
 }
 
