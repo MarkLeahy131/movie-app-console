@@ -1,6 +1,11 @@
 import java.util.*
+import java.lang.System.exit
 
 val scanner = Scanner(System.`in`)
+
+fun main(args: Array<String>) {
+    runMenu()
+}
 
 fun runMenu() {
     do {
@@ -32,19 +37,19 @@ fun mainMenu() : Int {
     print("==>> ")
     return scanner.nextInt()
 }
-fun addNote(){
+fun selectGenre(){
     println("You chose Add Note")
 }
 
-fun listNotes(){
+fun selectDirector(){
     println("You chose List Notes")
 }
 
-fun updateNote(){
+fun selectDuration(){
     println("You chose Update Note")
 }
 
-fun deleteNote(){
+fun giveRating(){
     println("You chose Delete Note")
 }
 
