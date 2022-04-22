@@ -22,21 +22,22 @@ fun runMenu() {
 }
 
 fun mainMenu() : Int {
-    println("")
-    println("--------------------")
-    println("NOTE KEEPER APP")
-    println("--------------------")
-    println("NOTE MENU")
-    println("  1) Select a Genre")
-    println("  2) Select a Director")
-    println("  3) Select a Duration")
-    println("  4) Give a Rating")
-    println("--------------------")
-    println("  0) Exit")
-    println("--------------------")
-    print("==>> ")
+    print("""
+          ----------------------------------
+          |        NOTE KEEPER APP         |
+          ----------------------------------
+          | NOTE MENU                      |
+          |   1) Select a Genre            |
+          |   2) Select a Director         |
+          |   3) Select a Duration         |
+          |   4) Give a Rating             |
+          ----------------------------------
+          |   0) Exit                      |
+          ----------------------------------
+          ==>> """)
     return scanner.nextInt()
 }
+
 fun selectGenre(){
     println("You chose Add Note")
 }
