@@ -32,3 +32,23 @@ fun mainMenu() : Int {
     print("==>> ")
     return scanner.nextInt()
 }
+fun addNote(){
+    println("You chose Add Note")
+}
+
+fun listNotes(){
+    println("You chose List Notes")
+}
+
+fun updateNote(){
+    println("You chose Update Note")
+}
+
+fun deleteNote(){
+    println("You chose Delete Note")
+}
+
+fun exitApp(){
+    println("Exiting...bye")
+    exit(0)
+}
