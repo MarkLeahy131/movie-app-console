@@ -1,7 +1,8 @@
+import mu.KotlinLogging
 import utils.ScannerInput
 import java.lang.System.exit
 
-
+private val logger = KotlinLogging.logger {}
 
 fun main(args: Array<String>) {
     runMenu()
@@ -38,22 +39,22 @@ fun mainMenu() : Int {
 }
 
 fun selectGenre(){
-    println("You chose Add Note")
+    logger.info { "Select a Genre" }
 }
 
 fun selectDirector(){
-    println("You chose List Notes")
+    logger.info { "Select a Director" }
 }
 
 fun selectDuration(){
-    println("You chose Update Note")
+    logger.info { "Select a Duration" }
 }
 
 fun giveRating(){
-    println("You chose Delete Note")
+    logger.info { "Give a Rating" }
 }
 
 fun exitApp(){
-    println("Exiting...bye")
+    logger.info { "Exit" }
     exit(0)
 }
