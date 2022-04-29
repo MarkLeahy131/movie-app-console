@@ -5,6 +5,7 @@ import models.Movie
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 import kotlin.test.assertEquals
@@ -45,39 +46,46 @@ class MovieAPITest {
         emptyMovies = null
     }
 
+    @Nested
+    inner class AddMovies {
+        @Test
+        fun `adding a Movie to a populated list adds to ArrayList`() {
+            val newMovie = Movie("Action", "Justice League", "Liz", 100, 5.1)
+            assertEquals(5, populatedMovies!!.numberOfMovies())
+            assertTrue(populatedMovies!!.add(newMovie))
+            assertEquals(6, populatedMovies!!.numberOfMovies())
+            assertEquals(newMovie, populatedMovies!!.findMovie(populatedMovies!!.numberOfMovies() - 1))
+        }
 
-    @Test
-    fun `adding a Movie to a populated list adds to ArrayList`() {
-        val newMovie = Movie("Action", "Justice League", "Liz", 100, 5.1)
-        assertEquals(5, populatedMovies!!.numberOfMovies())
-        assertTrue(populatedMovies!!.add(newMovie))
-        assertEquals(6, populatedMovies!!.numberOfMovies())
-        assertEquals(newMovie, populatedMovies!!.findMovie(populatedMovies!!.numberOfMovies() - 1))
-    }
+        @Test
+        fun `adding a Movie to an empty list adds to ArrayList`() {
+            val newMovie = Movie("Action", "James Bond", "Mark", 100, 3.3)
+            assertEquals(0, emptyMovies!!.numberOfMovies())
+            assertTrue(emptyMovies!!.add(newMovie))
+            assertEquals(1, emptyMovies!!.numberOfMovies())
+            assertEquals(newMovie, emptyMovies!!.findMovie(emptyMovies!!.numberOfMovies() - 1))
+        }
 
-    @Test
-    fun `adding a Movie to an empty list adds to ArrayList`() {
-        val newMovie = Movie("Action", "James Bond", "Mark", 100,3.3)
-        assertEquals(0, emptyMovies!!.numberOfMovies())
-        assertTrue(emptyMovies!!.add(newMovie))
-        assertEquals(1, emptyMovies!!.numberOfMovies())
-        assertEquals(newMovie, emptyMovies!!.findMovie(emptyMovies!!.numberOfMovies() - 1))
-    }
-    @Test
-    fun `listAllMovies returns No Movies Stored message when ArrayList is empty`() {
-        assertEquals(0, emptyMovies!!.numberOfMovies())
-        assertTrue(emptyMovies!!.listAllMovies().lowercase().contains("no movies"))
-    }
+        @Test
+        fun `listAllMovies returns No Movies Stored message when ArrayList is empty`() {
+            assertEquals(0, emptyMovies!!.numberOfMovies())
+            assertTrue(emptyMovies!!.listAllMovies().lowercase().contains("no movies"))
+        }
 
-    @Test
-    fun `listAllMovies returns Movies when ArrayList has Movies stored`() {
-        assertEquals(5, populatedMovies!!.numberOfMovies())
-        val movieString = populatedMovies!!.listAllMovies().lowercase()
-        assertTrue(movieString.contains("learning kotlin"))
-        assertTrue(movieString.contains("code app"))
-        assertTrue(movieString.contains("test app"))
-        assertTrue(movieString.contains("swim"))
-        assertTrue(movieString.contains("summer holiday"))
+        @Nested
+        inner class ListMovies {
+
+            @Test
+            fun `listAllMovies returns Movies when ArrayList has Movies stored`() {
+                assertEquals(5, populatedMovies!!.numberOfMovies())
+                val movieString = populatedMovies!!.listAllMovies().lowercase()
+                assertTrue(movieString.contains("learning kotlin"))
+                assertTrue(movieString.contains("code app"))
+                assertTrue(movieString.contains("test app"))
+                assertTrue(movieString.contains("swim"))
+                assertTrue(movieString.contains("summer holiday"))
+            }
+        }
     }
 }
 
