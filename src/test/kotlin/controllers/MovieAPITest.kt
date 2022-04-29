@@ -1,13 +1,12 @@
 package controllers
 
-import com.sun.org.apache.xml.internal.security.keys.keyresolver.KeyResolver.length
+
 import models.Movie
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import sun.jvm.hotspot.runtime.BasicObjectLock.size
-import java.nio.file.Files.size
+
 import kotlin.test.assertEquals
 
 class MovieAPITest {
@@ -63,6 +62,22 @@ class MovieAPITest {
         assertTrue(emptyMovies!!.add(newMovie))
         assertEquals(1, emptyMovies!!.numberOfMovies())
         assertEquals(newMovie, emptyMovies!!.findMovie(emptyMovies!!.numberOfMovies() - 1))
+    }
+    @Test
+    fun `listAllMovies returns No Movies Stored message when ArrayList is empty`() {
+        assertEquals(0, emptyMovies!!.numberOfMovies())
+        assertTrue(emptyMovies!!.listAllMovies().lowercase().contains("no movies"))
+    }
+
+    @Test
+    fun `listAllMovies returns Movies when ArrayList has Movies stored`() {
+        assertEquals(5, populatedMovies!!.numberOfMovies())
+        val movieString = populatedMovies!!.listAllMovies().lowercase()
+        assertTrue(movieString.contains("learning kotlin"))
+        assertTrue(movieString.contains("code app"))
+        assertTrue(movieString.contains("test app"))
+        assertTrue(movieString.contains("swim"))
+        assertTrue(movieString.contains("summer holiday"))
     }
 }
 
