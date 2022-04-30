@@ -36,9 +36,9 @@ fun mainMenu() : Int {
          > |        NOTE KEEPER APP         |
          > ----------------------------------
          > | NOTE MENU                      |
-         > |   1) Add Movie
-         > |   2) List Movies
-         > |   3) Select a Genre           |
+         > |   1) Add Movie                 |
+         > |   2) List Movies               |
+         > |   3) Select a Genre            |
          > |   4) Select a Director         |
          > |   5) Select a Duration         |
          > |   6) Give a a Rating           |
@@ -67,7 +67,9 @@ fun selectGenre(){
 }
 
 fun selectDirector(){
-    logger.info { "Select a Director" }
+    //logger.info { "Select a Director" }
+    val movieDirector= readNextLine("Enter a genre to check for: ")
+    print(movieAPI.listAllMoviesByDirector(movieDirector))
 }
 
 fun selectDuration(){
