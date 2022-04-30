@@ -22,8 +22,9 @@ fun runMenu() {
             1  -> addMovie()
             2  -> listMovies()
             3  -> selectGenre()
-            4  -> selectDuration()
-            5  -> giveRating()
+            4  -> selectDirector()
+            5  -> selectDuration()
+            6  -> giveRating()
             0  -> exitApp()
             else -> System.out.println("Invalid option entered: ${option}")
         }
@@ -36,9 +37,9 @@ fun mainMenu() : Int {
          > |        NOTE KEEPER APP         |
          > ----------------------------------
          > | NOTE MENU                      |
-         > |   1) Add Movie
-         > |   2) List Movies
-         > |   3) Select a Genre           |
+         > |   1) Add Movie                 |
+         > |   2) List Movies               |
+         > |   3) Select a Genre            |
          > |   4) Select a Director         |
          > |   5) Select a Duration         |
          > |   6) Give a a Rating           |
@@ -67,7 +68,9 @@ fun selectGenre(){
 }
 
 fun selectDirector(){
-    logger.info { "Select a Director" }
+    //logger.info { "Select a Director" }
+    val movieDirector= readNextLine("Enter a director to check for: ")
+    print(movieAPI.listAllMoviesByDirector(movieDirector))
 }
 
 fun selectDuration(){

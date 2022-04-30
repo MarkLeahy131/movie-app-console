@@ -36,6 +36,19 @@ class MovieAPI {
             listOfMovies
         }
     }
+        fun listAllMoviesByDirector(director:String): String {
+            return if (movies.isEmpty()) {
+                "No movies stored"
+            } else {
+                var listOfMovies = ""
+                for (i in movies.indices) {
+                    if (movies[i].movieDirector.equals(director))
+                        listOfMovies += "${i}: ${movies[i]} \n"
+                }
+                listOfMovies
+            }
+
+    }
     fun numberOfMovies(): Int {
         return movies.size
     }
