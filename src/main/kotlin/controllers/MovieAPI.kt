@@ -2,9 +2,16 @@ package controllers
 
 
 import models.Movie
+import persistence.Serializer
+import persistence.XMLSerializer
+import java.io.File
 
 
-class MovieAPI {
+
+    class MovieAPI(serializerType: Serializer){
+
+        private var serializer: Serializer = serializerType
+
 
     private var movies = ArrayList<Movie>()
 
@@ -75,7 +82,15 @@ class MovieAPI {
                 }
 
     }
+    @Throws(Exception::class)
+    fun load() {
+        movies = serializer.read() as ArrayList<Movie>
+    }
 
+    @Throws(Exception::class)
+    fun store() {
+        serializer.write(movies)
+    }
     }
 
 
