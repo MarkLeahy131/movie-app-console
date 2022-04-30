@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import persistence.JSONSerializer
 import persistence.XMLSerializer
 import java.io.File
 
@@ -128,6 +129,43 @@ class MovieAPITest {
                 assertEquals(storingMovies.findMovie(1), loadedMovie.findMovie(1))
                 assertEquals(storingMovies.findMovie(2), loadedMovie.findMovie(2))
             }
+        }
+        @Test
+        fun `saving and loading an empty collection in JSON doesn't crash app`() {
+            // Saving an empty movies.json file.
+            val storingMovies = MovieAPI(JSONSerializer(File("movies.json")))
+            storingMovies.store()
+
+            //Loading the empty movies.json file into a new object
+            val loadedMovies = MovieAPI(JSONSerializer(File("movies.json")))
+            loadedMovies.load()
+
+            //Comparing the source of the movies (storingMovies) with the json loaded movies (loadedMovies)
+            assertEquals(0, storingMovies.numberOfMovies())
+            assertEquals(0, loadedMovies.numberOfMovies())
+            assertEquals(storingMovies.numberOfMovies(), loadedMovies.numberOfMovies())
+        }
+
+        @Test
+        fun `saving and loading and loaded collection in JSON doesn't loose data`() {
+            // Storing 3 movies to the movies.json file.
+            val storingMovies = MovieAPI(JSONSerializer(File("movies.json")))
+            storingMovies.add(testApp!!)
+            storingMovies.add(swim!!)
+            storingMovies.add(summerHoliday!!)
+            storingMovies.store()
+
+            //Loading notes.json into a different collection
+            val loadedMovies = MovieAPI(JSONSerializer(File("movies.json")))
+            loadedMovies.load()
+
+            //Comparing the source of the movies (storingMovies) with the json loaded movies (loadedMovies)
+            assertEquals(3, storingMovies.numberOfMovies())
+            assertEquals(3, loadedMovies.numberOfMovies())
+            assertEquals(storingMovies.numberOfMovies(), loadedMovies.numberOfMovies())
+            assertEquals(storingMovies.findMovie(0), loadedMovies.findMovie(0))
+            assertEquals(storingMovies.findMovie(1), loadedMovies.findMovie(1))
+            assertEquals(storingMovies.findMovie(2), loadedMovies.findMovie(2))
         }
     }
 }
