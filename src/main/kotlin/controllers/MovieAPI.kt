@@ -11,6 +11,20 @@ class MovieAPI {
     fun add(movie: Movie): Boolean {
         return movies.add(movie)
     }
+    fun numberOfMovies(): Int {
+        return movies.size
+    }
+
+    fun findMovie(index: Int): Movie? {
+        return if (isValidListIndex(index, movies)) {
+            movies[index]
+        } else null
+    }
+
+    //utility method to determine if an index is valid in a list.
+    fun isValidListIndex(index: Int, list: List<Any>): Boolean {
+        return (index >= 0 && index < list.size)
+    }
 
     fun listAllMovies(): String {
         return if (movies.isEmpty()) {
@@ -61,20 +75,7 @@ class MovieAPI {
                 }
 
     }
-    fun numberOfMovies(): Int {
-        return movies.size
-    }
 
-        fun findMovie(index: Int): Movie? {
-            return if (isValidListIndex(index, movies)) {
-                movies[index]
-            } else null
-        }
-
-        //utility method to determine if an index is valid in a list.
-        fun isValidListIndex(index: Int, list: List<Any>): Boolean {
-            return (index >= 0 && index < list.size)
-        }
     }
 
 
