@@ -1,6 +1,7 @@
 import controllers.MovieAPI
 import models.Movie
 import mu.KotlinLogging
+import persistence.Serializer
 import utils.ScannerInput
 import utils.ScannerInput.readNextDouble
 import utils.ScannerInput.readNextInt
@@ -10,29 +11,33 @@ import java.lang.System.exit
 private val logger = KotlinLogging.logger {}
 private var movieAPI = MovieAPI()
 
+class MovieAPI(serializerType: Serializer) {
 
-fun main(args: Array<String>) {
-    runMenu()
-}
+    private var serializer: Serializer = serializerType
 
-fun runMenu() {
-    do {
-        val option = mainMenu()
-        when (option) {
-            1  -> addMovie()
-            2  -> listMovies()
-            3  -> selectGenre()
-            4  -> selectDirector()
-            5  -> selectDuration()
-            6  -> giveRating()
-            0  -> exitApp()
-            else -> System.out.println("Invalid option entered: ${option}")
-        }
-    } while (true)
-}
+    fun main(args: Array<String>) {
+        runMenu()
+    }
 
-fun mainMenu() : Int {
-    return ScannerInput.readNextInt(""" 
+    fun runMenu() {
+        do {
+            val option = mainMenu()
+            when (option) {
+                1 -> addMovie()
+                2 -> listMovies()
+                3 -> selectGenre()
+                4 -> selectDirector()
+                5 -> selectDuration()
+                6 -> giveRating()
+                0 -> exitApp()
+                else -> System.out.println("Invalid option entered: ${option}")
+            }
+        } while (true)
+    }
+
+    fun mainMenu(): Int {
+        return ScannerInput.readNextInt(
+            """ 
          > ----------------------------------
          > |        NOTE KEEPER APP         |
          > ----------------------------------
@@ -46,44 +51,48 @@ fun mainMenu() : Int {
          > ----------------------------------
          > |   0) Exit                      |
          > ----------------------------------
-         > ==>> """.trimMargin(">"))
-}
+         > ==>> """.trimMargin(">")
+        )
+    }
 
-fun addMovie(){
-    val movieGenre = readNextLine("Enter a genre for the movie: ")
-    val movieName = readNextLine("Enter a name for the movie: ")
-    val movieDirector = readNextLine("Enter a director for the movie: ")
-    val movieDur = readNextInt("Enter a length (mins) for the movie: ")
-    val movieR = readNextDouble("Enter a rating for the movie: ")
-    val isAdd = movieAPI.add(Movie(movieGenre, movieName, movieDirector, movieDur, movieR))
+    fun addMovie() {
+        val movieGenre = readNextLine("Enter a genre for the movie: ")
+        val movieName = readNextLine("Enter a name for the movie: ")
+        val movieDirector = readNextLine("Enter a director for the movie: ")
+        val movieDur = readNextInt("Enter a length (mins) for the movie: ")
+        val movieR = readNextDouble("Enter a rating for the movie: ")
+        val isAdd = movieAPI.add(Movie(movieGenre, movieName, movieDirector, movieDur, movieR))
 
-}
-fun listMovies(){
-    print(movieAPI.listAllMovies())
-}
-fun selectGenre(){
-    //logger.info { "addNote() function invoked" }
-    val movieGenre = readNextLine("Enter a genre to check for: ")
-    print(movieAPI.listAllMoviesByGenre(movieGenre))
-}
+    }
 
-fun selectDirector(){
-    //logger.info { "Select a Director" }
-    val movieDirector= readNextLine("Enter a director to check for: ")
-    print(movieAPI.listAllMoviesByDirector(movieDirector))
-}
+    fun listMovies() {
+        print(movieAPI.listAllMovies())
+    }
 
-fun selectDuration(){
-    //logger.info { "Select a Duration" }
-    val movieDuration= readNextLine("Enter a duration to check for: ")
-    print(movieAPI.listAllMoviesByDuration(movieDuration))
-}
+    fun selectGenre() {
+        //logger.info { "addNote() function invoked" }
+        val movieGenre = readNextLine("Enter a genre to check for: ")
+        print(movieAPI.listAllMoviesByGenre(movieGenre))
+    }
 
-fun giveRating(){
-    logger.info { "Give a Rating" }
-}
+    fun selectDirector() {
+        //logger.info { "Select a Director" }
+        val movieDirector = readNextLine("Enter a director to check for: ")
+        print(movieAPI.listAllMoviesByDirector(movieDirector))
+    }
 
-fun exitApp(){
-    logger.info { "Exit" }
-    exit(0)
+    fun selectDuration() {
+        //logger.info { "Select a Duration" }
+        val movieDuration = readNextLine("Enter a duration to check for: ")
+        print(movieAPI.listAllMoviesByDuration(movieDuration))
+    }
+
+    fun giveRating() {
+        logger.info { "Give a Rating" }
+    }
+
+    fun exitApp() {
+        logger.info { "Exit" }
+        exit(0)
+    }
 }
