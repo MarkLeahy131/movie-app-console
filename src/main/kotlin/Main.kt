@@ -1,5 +1,6 @@
 import controllers.MovieAPI
-import jdk.internal.vm.vector.VectorSupport.store
+//import jdk.internal.vm.vector.VectorSupport.store
+//import jdk.internal.vm.vector.VectorSupport.store
 import models.Movie
 import mu.KotlinLogging
 import persistence.Serializer
@@ -10,9 +11,10 @@ import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
 import java.io.File
 import java.lang.System.exit
+//import java.lang.System.load
 
 private val logger = KotlinLogging.logger {}
-//private val movieAPI = MovieAPI()
+
 private val movieAPI = MovieAPI(XMLSerializer(File("movies.xml")))
 
 
@@ -30,6 +32,8 @@ private val movieAPI = MovieAPI(XMLSerializer(File("movies.xml")))
                 4 -> selectDirector()
                 5 -> selectDuration()
                 6 -> giveRating()
+                7 -> save()
+                8 -> load()
                 0 -> exitApp()
                 else -> System.out.println("Invalid option entered: ${option}")
             }
@@ -50,6 +54,8 @@ private val movieAPI = MovieAPI(XMLSerializer(File("movies.xml")))
          > |   5) Select a Duration         |
          > |   6) Give a a Rating           |
          > ----------------------------------
+         > |   7) Save a Movie              |
+         > |   8) Load a Movie              |
          > |   0) Exit                      |
          > ----------------------------------
          > ==>> """.trimMargin(">")
@@ -98,7 +104,7 @@ private val movieAPI = MovieAPI(XMLSerializer(File("movies.xml")))
     }
 fun save() {
     try {
-        MovieAPI.store()
+        movieAPI.store()
     } catch (e: Exception) {
         System.err.println("Error writing to file: $e")
     }
@@ -106,7 +112,7 @@ fun save() {
 
 fun load() {
     try {
-        MovieAPI.load()
+        movieAPI.load()
     } catch (e: Exception) {
         System.err.println("Error reading from file: $e")
     }

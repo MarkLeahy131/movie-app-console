@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import persistence.XMLSerializer
+import java.io.File
 
 import kotlin.test.assertEquals
 
@@ -16,8 +18,8 @@ class MovieAPITest {
     private var codeApp: Movie? = null
     private var testApp: Movie? = null
     private var swim: Movie? = null
-    private var populatedMovies: MovieAPI? = MovieAPI()
-    private var emptyMovies: MovieAPI? = MovieAPI()
+    private var populatedMovies: MovieAPI? = MovieAPI(XMLSerializer(File("movies.xml")))
+    private var emptyMovies: MovieAPI? = MovieAPI(XMLSerializer(File("movies.xml")))
 
     @BeforeEach
     fun setup() {
@@ -84,6 +86,47 @@ class MovieAPITest {
                 assertTrue(movieString.contains("test app"))
                 assertTrue(movieString.contains("swim"))
                 assertTrue(movieString.contains("summer holiday"))
+            }
+        }
+        @Nested
+        inner class PersistenceTests {
+
+            @Test
+            fun `saving and loading an empty collection in XML doesn't crash app`() {
+                // Saving an empty notes.XML file.
+                val storingMovies = MovieAPI(XMLSerializer(File("movies.xml")))
+                storingMovies.store()
+
+                //Loading the empty notes.xml file into a new object
+                val loadedMovies = MovieAPI(XMLSerializer(File("notes.xml")))
+                loadedMovies.load()
+
+                //Comparing the source of the notes (storingNotes) with the XML loaded notes (loadedNotes)
+                assertEquals(0, storingMovies.numberOfMovies())
+                assertEquals(0, loadedMovies.numberOfMovies())
+                assertEquals(storingMovies.numberOfMovies(), loadedMovies.numberOfMovies())
+            }
+
+            @Test
+            fun `saving and loading and loaded collection in XML doesn't loose data`() {
+                // Storing 3 notes to the movies.XML file.
+                val storingMovies = MovieAPI(XMLSerializer(File("movies.xml")))
+                storingMovies.add(testApp!!)
+                storingMovies.add(swim!!)
+                storingMovies.add(summerHoliday!!)
+                storingMovies.store()
+
+                //Loading movies.xml into a different collection
+                val loadedMovie = MovieAPI(XMLSerializer(File("movies.xml")))
+                loadedMovie.load()
+
+                //Comparing the source of the notes (storingMovies) with the XML loaded notes (loadedNotes)
+                assertEquals(3, storingMovies.numberOfMovies())
+                assertEquals(3, loadedMovie.numberOfMovies())
+                assertEquals(storingMovies.numberOfMovies(), loadedMovie.numberOfMovies())
+                assertEquals(storingMovies.findMovie(0), loadedMovie.findMovie(0))
+                assertEquals(storingMovies.findMovie(1), loadedMovie.findMovie(1))
+                assertEquals(storingMovies.findMovie(2), loadedMovie.findMovie(2))
             }
         }
     }

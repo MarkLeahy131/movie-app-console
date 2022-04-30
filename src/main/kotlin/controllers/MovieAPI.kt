@@ -5,7 +5,6 @@ import models.Movie
 import persistence.Serializer
 
 
-//class MovieAPI {
     class MovieAPI(serializerType: Serializer){
 
         private var serializer: Serializer = serializerType
@@ -80,7 +79,15 @@ import persistence.Serializer
                 }
 
     }
+    @Throws(Exception::class)
+    fun load() {
+        movies = serializer.read() as ArrayList<Movie>
+    }
 
+    @Throws(Exception::class)
+    fun store() {
+        serializer.write(movies)
+    }
     }
 
 
