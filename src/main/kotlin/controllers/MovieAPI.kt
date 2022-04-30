@@ -47,6 +47,18 @@ class MovieAPI {
                 }
                 listOfMovies
             }
+        }
+            fun listAllMoviesByDuration(duration:String): String {
+                return if (movies.isEmpty()) {
+                    "No movies stored"
+                } else {
+                    var listOfMovies = ""
+                    for (i in movies.indices) {
+                        if (movies[i].movieDuration.equals(duration))
+                            listOfMovies += "${i}: ${movies[i]} \n"
+                    }
+                    listOfMovies
+                }
 
     }
     fun numberOfMovies(): Int {

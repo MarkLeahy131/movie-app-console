@@ -76,7 +76,7 @@ fun selectDirector(){
 fun selectDuration(){
     //logger.info { "Select a Duration" }
     val movieDuration= readNextLine("Enter a duration to check for: ")
-    print(movieAPI.listAllMoviesByDirector(movieDuration))
+    print(movieAPI.listAllMoviesByDuration(movieDuration))
 }
 
 fun giveRating(){
