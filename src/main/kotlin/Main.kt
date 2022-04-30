@@ -3,6 +3,7 @@ import controllers.MovieAPI
 //import jdk.internal.vm.vector.VectorSupport.store
 import models.Movie
 import mu.KotlinLogging
+import persistence.JSONSerializer
 import persistence.Serializer
 import persistence.XMLSerializer
 import utils.ScannerInput
@@ -15,7 +16,8 @@ import java.lang.System.exit
 
 private val logger = KotlinLogging.logger {}
 
-private val movieAPI = MovieAPI(XMLSerializer(File("movies.xml")))
+//private val movieAPI = MovieAPI(XMLSerializer(File("movies.xml")))
+private val movieAPI = MovieAPI(JSONSerializer(File("movies.json")))
 
 
     fun main(args: Array<String>) {

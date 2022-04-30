@@ -3,6 +3,9 @@ package controllers
 
 import models.Movie
 import persistence.Serializer
+import persistence.XMLSerializer
+import java.io.File
+
 
 
     class MovieAPI(serializerType: Serializer){
