@@ -2,9 +2,14 @@ package controllers
 
 
 import models.Movie
+import persistence.Serializer
 
 
-class MovieAPI {
+//class MovieAPI {
+    class MovieAPI(serializerType: Serializer){
+
+        private var serializer: Serializer = serializerType
+
 
     private var movies = ArrayList<Movie>()
 

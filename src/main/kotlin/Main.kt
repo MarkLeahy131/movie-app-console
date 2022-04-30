@@ -1,19 +1,20 @@
 import controllers.MovieAPI
+import jdk.internal.vm.vector.VectorSupport.store
 import models.Movie
 import mu.KotlinLogging
 import persistence.Serializer
+import persistence.XMLSerializer
 import utils.ScannerInput
 import utils.ScannerInput.readNextDouble
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
+import java.io.File
 import java.lang.System.exit
 
 private val logger = KotlinLogging.logger {}
-private var movieAPI = MovieAPI()
+//private val movieAPI = MovieAPI()
+private val movieAPI = MovieAPI(XMLSerializer(File("movies.xml")))
 
-class MovieAPI(serializerType: Serializer) {
-
-    private var serializer: Serializer = serializerType
 
     fun main(args: Array<String>) {
         runMenu()
@@ -94,5 +95,19 @@ class MovieAPI(serializerType: Serializer) {
     fun exitApp() {
         logger.info { "Exit" }
         exit(0)
+    }
+fun save() {
+    try {
+        MovieAPI.store()
+    } catch (e: Exception) {
+        System.err.println("Error writing to file: $e")
+    }
+}
+
+fun load() {
+    try {
+        MovieAPI.load()
+    } catch (e: Exception) {
+        System.err.println("Error reading from file: $e")
     }
 }
